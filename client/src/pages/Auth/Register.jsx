@@ -5,7 +5,7 @@ import React,
 import { useNavigate } from 'react-router-dom'
 
 function Register() {
-    const [nom,setNom]=useState('');
+const [nom,setNom]=useState('');
 const [prenom,setPrenom]=useState('');
 const [email,setEmail]=useState('');
 const [password,setPassword]=useState('');
@@ -13,24 +13,28 @@ const navigate = useNavigate();
 
 async function register(){
 
-console.log(nom,prenom,email,password)
-let item={nom,prenom,email,password}
-// console.warn(item)
-
-let result=await fetch("http://localhost:5000/auth/register",{
-method:'POST',
-headers:{
-"Content-Type":"application/json",
-"Accept":"application/json"
-},
-body:JSON.stringify(item)
-});
-result=await result.json();
-console.log(result);
-
-navigate("/login")
-
-}
+    const res = await fetch("http://localhost:5000/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        nom,
+        prenom,
+        email,
+        password
+      })
+    });
+    const data = await res.json();
+    if (data.error) {
+      window.alert(data.error);
+    } else {
+      // window.alert("Register Success");
+      // console.log(data);
+     navigate("/login")
+    }
+  };
   return (
     <div>
               <div class="relative flex h-full w-full">
@@ -50,31 +54,33 @@ navigate("/login")
       </div>
       <div class="mt-10">
         <form
-        onSubmit={register}
+        
         >
         <div>
             <label class="mb-2.5 block font-extrabold" for="nom">Nom</label>
-            <input type="nom" id="nom" class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30" 
+            <input type="nom" id="nom"  name='nom'
+            class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30" 
             placeholder="nom"
             onChange={(e)=>setNom(e.target.value)}       
             />
           </div>user
           <div>
             <label class="mb-2.5 block font-extrabold" for="prenom">Prenom</label>
-            <input type="prenom" id="prenom" class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+            <input type="prenom" id="prenom" nom='prenom'
+            class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
              placeholder="Prenom" 
                 onChange={(e)=>setPrenom(e.target.value)}
              />
           </div>
           <div>
             <label class="mb-2.5 block font-extrabold" for="email">Email</label>
-            <input type="email" id="email" 
+            <input type="email" id="email"  name='email'
             onChange={(e)=>setEmail(e.target.value)}
             class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30" placeholder="mail@user.com" />
           </div>
           <div class="mt-4">
             <label class="mb-2.5 block font-extrabold" for="password">Password</label>
-            <input type="password" id="password"
+            <input type="password" id="password" name='password'
             onChange={(e)=>setPassword(e.target.value)}
              class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow" />
           </div>
@@ -89,6 +95,7 @@ navigate("/login")
           <div class="my-10">
             <button class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
             type='submit'
+            onClick={register}
             >Register</button>
           </div>
         </form>

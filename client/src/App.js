@@ -7,6 +7,10 @@ import Sidebar from './components/Sidebar';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import Profile from './pages/client/Profile';
+import Envoi from './components/clientcomponent/Envoi';
+import Retrait from './components/clientcomponent/Retrait';
+import Depot from './components/clientcomponent/Depot';
+import Releve from './pages/client/Releve';
 
 function App() {
   return (
@@ -19,6 +23,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/envoi" element={<Envoi />} />
+          <Route path="/retrait" element={<Retrait />} />
+          <Route path="/depot" element={<Depot />} />
+          <Route path="/releve" element={<Releve />} />
         </Routes>
       </Router>
 

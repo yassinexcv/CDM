@@ -1,6 +1,11 @@
 import React from 'react';
 
 const Navbar = () => {
+  const token = localStorage.getItem("token")
+  console.log(token)
+  const role = localStorage.getItem("role")
+  console.log(role)
+
   return (
     <nav className="bg-gray-800 p-2">
       <div className="container mx-auto flex items-center justify-between flex-wrap">
@@ -14,21 +19,41 @@ const Navbar = () => {
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow">
-            <a href="/" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+          <a href="/" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
               Home
             </a>
-            <a href="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-           Client
-            </a>
-            <a href="/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+            {token && role === "admin" &&   <a href="/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
             Dashboard
-            </a>
-            <a href="/login"className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+            </a>   
+              }
+           {token && role === "client" && <a href="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+              Client
+              </a>
+              }
+
+           {/* tester if  tocken existe afficher login et register sinon afficher logout */}
+            {!token && <a href="/login" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
               Login
             </a>
-            <a href="/register" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+            }
+            {!token && <a href="/register" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
               Register
             </a>
+            }
+            {token && 
+            <button className=""
+            onClick={() => {
+              localStorage.removeItem("token");
+              localStorage.removeItem("role");
+              localStorage.removeItem("id");
+              window.location.href = "/";
+            }}
+             >   
+             <a href="/logout" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+              Logout
+            </a>
+            </button>
+            }
 
           </div>
         </div>

@@ -1,48 +1,44 @@
 import React,{ useState, useEffect }from 'react'
-import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 
 function Login() {
-    const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const login = async (event) => {
-    event.preventDefault();
-    let item = { email, password };
-
-    let result = await fetch("http://localhost:5001/auth/login", {
+  const login = async (e) => {
+    e.preventDefault();
+    const res = await fetch("http://localhost:5000/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json",
+        "Accept": "application/json"
       },
-      body: JSON.stringify(item),
+      body: JSON.stringify({
+        email,
+        password
+      })
     });
-
-    result = await result.json();
-    // console log the token only
-    console.log(result);
-    console.log(result.role);
-    console.log(result.token);
-
-    // // tester si le client est admin ou pas
-    if (result.role === "admin") {
-      localStorage.removeItem("_id");
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.setItem("_id", result._id);
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("role", result.role);
-       window.location.href = "/dashboard";
-    } else if(result.role==="client"){
-      localStorage.setItem("_id", result._id);
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("role", result.role);
-      window.location.href = "/profile";
+    const data = await res.json();
+    if (data.error) {
+      window.alert(data.error);
+    } else {
+      window.alert("Login Success");
+      console.log(data);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      localStorage.setItem("id", data._id);
+    //  test  admin ou client 
+      if (data.role === "admin") {
+        navigate("/dashboard");
+      }
+      if (data.role === "client") {
+        navigate("/profile");
+      }
     }
   };
+
 
   return (
     <div>
@@ -62,10 +58,10 @@ function Login() {
         </fieldset>
       </div>
       <div class="mt-10">
-        <form>
+        <form onSubmit={login} >
           <div>
             <label class="mb-2.5 block font-extrabold" for="email">Email</label>
-            <input type="email" id="email"
+            <input type="email" id="email" name='email'
              class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30" 
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -73,7 +69,7 @@ function Login() {
           </div>
           <div class="mt-4">
             <label class="mb-2.5 block font-extrabold" for="email">Password</label>
-            <input type="password" id="email"
+            <input type="password" id="email" name='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)} 
             class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow" />
@@ -87,9 +83,7 @@ function Login() {
           </div>
           <div class="my-10">
             <button class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
-            type='submit'
-            onClick={login}
-           >Login</button>
+            type='submit'>Login</button>
           </div>
         </form>
       </div>
