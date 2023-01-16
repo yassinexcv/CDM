@@ -5,12 +5,14 @@ const Navbar = () => {
   console.log(token)
   const role = localStorage.getItem("role")
   console.log(role)
+// navbar bien stylé
 
   return (
+    
     <nav className="bg-gray-800 p-2">
       <div className="container mx-auto flex items-center justify-between flex-wrap">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <a href="#" className="font-semibold text-xl tracking-tight">My App</a>
+          <a href="#" className="font-semibold text-xl tracking-tight">CDM</a>
         </div>
         <div className="block lg:hidden">
           <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -41,7 +43,7 @@ const Navbar = () => {
             </a>
             }
             {token && 
-            <button className=""
+            <button className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
             onClick={() => {
               localStorage.removeItem("token");
               localStorage.removeItem("role");
@@ -49,9 +51,8 @@ const Navbar = () => {
               window.location.href = "/";
             }}
              >   
-             <a href="/logout" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
               Logout
-            </a>
+            
             </button>
             }
 

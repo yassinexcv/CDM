@@ -40,10 +40,7 @@ function Releve() {
                 <table class="table-auto w-full">
                     <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                         <tr>
-                            <th></th>
-                            <th class="p-2">
-                                <div class="font-semibold text-left">Nom</div>
-                            </th>
+                           
                             <th class="p-2">
                                 <div class="font-semibold text-left">Monton</div>
                             </th>
@@ -62,35 +59,28 @@ function Releve() {
                  
                         <tr>
                             <td class="p-2">
-                                <input type="checkbox" class="w-5 h-5" value="id-1"
-                                    />
-                            </td>
-                            <td class="p-2">
-                                <div class="font-medium text-gray-800">
-                                    {item.nom}
-                                </div>
-                            </td>
-                            <td class="p-2">
                                 <div class="text-left">{item.montant}</div>
                             </td>
                             <td class="p-2">
 
                                 <div class="text-left font-medium text-green-500">{item.type}</div>
                             </td>
-   {/* tester si  receveur exeste afficher id receveur si non aficher ----- */}
-                    
-                           {
-                                 item.receveur ?
-                                    <td class="p-2 grid justify-items-center  ">
-                                        <div class="text-left">{item.receveur}</div>
+
+                            {/* // si le type est envoi affiche l id si le type et depot affiche +++ si le retrait affiche --- */}
+                            {item.type === "envoi" ?
+                                <td class="p-2 grid justify-items-center ">
+                                    <div class="text-left"> Trensaction au faveur de [**{item.receveur}**]</div>
+                                </td>
+                                :
+                                item.type === "depot" ?
+                                    <td class="p-2 grid justify-items-center ">
+                                        <div class="text-left">+++</div>
                                     </td>
                                     :
                                     <td class="p-2 grid justify-items-center ">
-                                        <div class="text-left">-----</div>
+                                        <div class="text-left">---</div>
                                     </td>
-
-                           }
-
+                            }
                         </tr>
   ))}
                       

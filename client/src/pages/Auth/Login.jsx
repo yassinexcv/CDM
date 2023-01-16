@@ -1,5 +1,6 @@
 import React,{ useState, useEffect }from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 
 function Login() {
@@ -19,23 +20,28 @@ function Login() {
         email,
         password
       })
+
     });
     const data = await res.json();
     if (data.error) {
       window.alert(data.error);
+      
     } else {
-      window.alert("Login Success");
-      console.log(data);
+      // window.alert("Login Success");
+      // console.log(data);
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
       localStorage.setItem("id", data._id);
     //  test  admin ou client 
       if (data.role === "admin") {
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
       }
       if (data.role === "client") {
-        navigate("/profile");
+        window.location.href = "/profile";
       }
+    
+      
+
     }
   };
 

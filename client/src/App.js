@@ -11,23 +11,29 @@ import Envoi from './components/clientcomponent/Envoi';
 import Retrait from './components/clientcomponent/Retrait';
 import Depot from './components/clientcomponent/Depot';
 import Releve from './pages/client/Releve';
+import Home from './pages/Home';
+import Eror_404 from './pages/Eror_404';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const token = localStorage.getItem('token');
   return (
     <div className="App">
       <Navbar />
  
       <Router>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/envoi" element={<Envoi />} />
-          <Route path="/retrait" element={<Retrait />} />
-          <Route path="/depot" element={<Depot />} />
-          <Route path="/releve" element={<Releve />} />
+          <Route path="/dashboard" element={ token ? <Dashboard /> :<Login/>} />
+          <Route path="/profile" element={token ? <Profile /> : <Login/> } />
+          <Route path="/releve" element={ token ? <Releve /> : <Login/> } />
+          <Route path="*" element={<Eror_404 />} />
         </Routes>
+        <ToastContainer />
+
       </Router>
 
     </div>

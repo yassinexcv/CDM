@@ -1,6 +1,8 @@
 import React,
 { useState, useEffect }
  from 'react'
+ import { ToastContainer, toast } from 'react-toastify';
+//  import 'react-toastify/dist/ReactToastify.css';
 
 
 const Dashboard = () => {
@@ -38,6 +40,8 @@ const Dashboard = () => {
         .then((data)=>{
             console.log(data)
             getClient()
+            toast.success("compte active")
+
         })
     }
 // desactiver status
@@ -56,6 +60,7 @@ const Dashboard = () => {
         .then((data)=>{
             console.log(data)
             getClient()
+            alert("compte desactive")
         })
     }
 

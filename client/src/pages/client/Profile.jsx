@@ -1,11 +1,13 @@
 
 import React, { useEffect, useState } from "react";
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import moment from 'moment'
 
 
 function Profile() {
-  const id=localStorage.getItem("_id")
+  const id=localStorage.getItem("id")
   const token=localStorage.getItem("token")
   const role=localStorage.getItem("role")
 
@@ -24,7 +26,7 @@ function Profile() {
     setDataForm(newdata)
     console.log(newdata)
   }
-
+  
   function handleSubmit(e) {
     e.preventDefault();
     const token = localStorage.getItem("token");  
@@ -48,7 +50,19 @@ function Profile() {
     .then((res)=>res.json())
     .then((data)=>{
         console.log(data)
+       
+
+        if(dataform.type==="depot"){
+            toast.success("depot effectuer")
+        }
+        if(dataform.type==="retrait"){
+            toast.success("retrait effectuer")
+        }
+        if(dataform.type==="virement"){
+            toast.success("virement effectuer")
+        }
         window.location.reload();
+
     })
 
 
@@ -76,7 +90,7 @@ function Profile() {
     const getItem=async()=>{
         const res=await axios.get(`http://localhost:5000/client/getClientById/${id}`)
         setData(res.data)
-        console.log(res.data)
+        // console.log(res.data) 
     }
     getItem(id)
 }, [])

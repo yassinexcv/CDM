@@ -3,6 +3,9 @@ import React,
  from 'react'
 
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
 
 function Register() {
 const [nom,setNom]=useState('');
@@ -32,7 +35,8 @@ async function register(){
     } else {
       // window.alert("Register Success");
       // console.log(data);
-     navigate("/login")
+     window.location.href="/login"
+     toast.success("Register Success")
     }
   };
   return (
